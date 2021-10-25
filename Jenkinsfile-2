@@ -1,3 +1,4 @@
+@Library('shared-library') _
 pipeline {
   agent any
   environment {
@@ -9,14 +10,16 @@ pipeline {
         sh '''
            python3 --version
            pulumi version
-           env | sort
         '''
       }
     }
     stage('up') {
+      environment {
+        PULUMI_STACK = getPulumiStack()
+      }
       steps {
         sh '''
-           pulumi stack select ${GIT_BRANCH:7}
+           pulumi stack select ${PULUMI_STACK}
            pulumi up --yes
         '''
       }
