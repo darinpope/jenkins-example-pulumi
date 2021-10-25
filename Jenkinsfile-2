@@ -18,7 +18,6 @@ pipeline {
         PULUMI_STACK = getPulumiStack()
       }
       steps {
-        echo "${PULUMI_STACK}"
         sh '''
            pulumi stack select ${PULUMI_STACK}
            pulumi up --yes
