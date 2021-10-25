@@ -6,5 +6,5 @@ const primary = linode.getObjectStorageCluster({
 });
 const foobar = new linode.ObjectStorageBucket("foobar", {
     cluster: primary.then(primary => primary.id),
-    label: `%s`,
+    label: "foobar",
 });
