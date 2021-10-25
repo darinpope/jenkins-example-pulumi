@@ -1,0 +1,24 @@
+pipeline {
+  agent any
+  environment {
+    PULUMI_ACCESS_TOKEN = credentials('pulumi-access-token')
+  }
+  stages {
+    stage('verify tools') {
+      steps {
+        sh '''
+           python --version
+           pulumi version
+        '''
+      }
+    }
+    stage('up') {
+      steps {
+        sh '''
+           pulumi stack select ${GIT_BRANCH:7}
+           pulumi up --yes
+        '''
+      }
+    }
+  }
+}
