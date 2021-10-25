@@ -20,6 +20,7 @@ pipeline {
       }
       steps {
         sh '''
+           npm install
            pulumi stack select ${PULUMI_STACK}
            pulumi up --yes
         '''
