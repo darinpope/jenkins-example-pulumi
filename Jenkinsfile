@@ -8,6 +8,7 @@ pipeline {
       steps {
         sh '''
            env | sort
+           echo ${GIT_BRANCH:6}
            # pulumi stack select ${}
         '''
       }
