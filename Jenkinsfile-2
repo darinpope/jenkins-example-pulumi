@@ -7,8 +7,9 @@ pipeline {
     stage('verify tools') {
       steps {
         sh '''
-           python --version
+           python3 --version
            pulumi version
+           env | sort
         '''
       }
     }
