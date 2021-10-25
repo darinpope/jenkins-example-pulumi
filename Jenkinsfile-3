@@ -1,0 +1,31 @@
+@Library('shared-library') _
+pipeline {
+  agent any
+  environment {
+    PULUMI_ACCESS_TOKEN = credentials('pulumi-access-token')
+    LINODE_TOKEN = credentials('linode-token')
+  }
+  stages {
+    stage('verify tools') {
+      steps {
+        sh '''
+          node -v
+          npm -v
+          pulumi version
+        '''
+      }
+    }
+    stage('up') {
+      environment {
+        PULUMI_STACK = getPulumiStack()
+      }
+      steps {
+        sh '''
+           npm install
+           pulumi stack select ${PULUMI_STACK}
+           pulumi up --yes
+        '''
+      }
+    }
+  }
+}
